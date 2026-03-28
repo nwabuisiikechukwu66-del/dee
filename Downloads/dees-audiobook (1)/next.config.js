@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['pdf-parse', 'epub2'],
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -7,7 +8,6 @@ const nextConfig = {
       { protocol: 'https', hostname: 'covers.openlibrary.org' },
     ],
   },
-  serverExternalPackages: ['pdf-parse', 'epub2'],
   eslint: {
     ignoreDuringBuilds: true,
   },

@@ -1,4 +1,6 @@
 'use client'
+
+import { Suspense } from 'react'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { MagnifyingGlass, Plus, Check, Play } from '@phosphor-icons/react'
@@ -11,9 +13,7 @@ import { Input, Skeleton, Pill } from '@/components/ui'
 import { GENRE_LABELS, type Genre, type SearchResult, type Book } from '@/types'
 import { generateBookId } from '@/utils'
 
-const GENRES = Object.keys(GENRE_LABELS) as Genre[]
-
-export default function DiscoverPage() {
+function DiscoverContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const initGenre = searchParams.get('genre') as Genre | null
@@ -114,8 +114,11 @@ export default function DiscoverPage() {
     }
   }
 
+  const GENRES = Object.keys(GENRE_LABELS) as Genre[]
+
   return (
     <main className="flex-1 overflow-y-auto bg-[#F9F5EE] pb-nav" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+      {/* rest of JSX same as original */}
       <header className="px-4 pt-6 pb-4">
         <h1 className="font-serif text-[2rem] leading-tight text-[#2C2416]">Discover</h1>
         <p className="text-sm text-[#9E8E7A] font-serif mt-1">Free from Gutenberg &amp; Open Library</p>
@@ -195,5 +198,13 @@ export default function DiscoverPage() {
         }
       </section>
     </main>
+  )
+}
+
+export default function DiscoverPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DiscoverContent />
+    </Suspense>
   )
 }
